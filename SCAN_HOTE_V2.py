@@ -43,14 +43,15 @@ def découverte_total(reseau):
         for ip_addr in ipaddress.IPv4Network(reseau):
             packet = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(ip_addr))
             rép = srp1(packet, timeout = 2, verbose=0)
-
+            if rép :
+                MAC = rép.hwsrc
             packet = IP(dst=str(ip_addr))/ICMP()
             réponse = sr1(packet, timeout=2, verbose=0)
   
             if réponse :    
                 
                 print(f"L'IP : {ip_addr} existe !!")
-                RESULTAT.append(f"{ip_addr}                  {rép.hwsrc}")
+                RESULTAT.append(f"{ip_addr}                  {MAC}")
             else :
                 print(f"L'IP : {ip_addr} n'existe pas ...")
 
