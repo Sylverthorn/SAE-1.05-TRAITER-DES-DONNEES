@@ -62,7 +62,7 @@ def découverte_total(reseau):
         
                     if réponse :    
                         
-                        print(f"{VERT}L'IP : {ip_addr} existe !!{RESET}")
+                        print(f"{VERT}L'IP : {ip_addr} existe !!        avec l'adresse MAC {MAC}{RESET}")
                         RESULTAT.append(f"{ip_addr}                  {MAC}")
                     else :
                         print(f"{ROUGE}L'IP : {ip_addr} n'existe pas ...{RESET}")
