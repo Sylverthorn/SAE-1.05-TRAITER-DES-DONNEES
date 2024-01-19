@@ -48,7 +48,7 @@ def passive(ip):
 
 def découverte_total(reseau):
     if "/" not in reseau:
-            reseau = input("{ROUGE}ERREUR ! mauvais format, essayé sous cette forme : xx.xx.xx.xx/xx : ")
+            reseau = input(f"{ROUGE}ERREUR ! mauvais format, essayé sous cette forme : xx.xx.xx.xx/xx : ")
     else :  
                 for ip_addr in ipaddress.IPv4Network(reseau):
                     packet = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(ip_addr))
